@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: flask-app
-          image: <your-docker-username>/flask-mongo:<your-image-tag>
+          image: pranjaldeka/flask-mongo:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
