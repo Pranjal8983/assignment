@@ -35,5 +35,5 @@ jobs:
           push: true
           # You can add multiple tags (latest + git SHA)
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/flask-mongo:latest
-            ${{ secrets.DOCKER_USERNAME }}/flask-mongo:${{ github.sha }}
+            ${{ secrets.DOCKER_USER }}/flask-mongo:latest
+            ${{ secrets.DOCKER_USER }}/flask-mongo:${{ github.sha }}
