@@ -1,0 +1,50 @@
+Build & push Docker image
+docker build -t pranjaldeka/flask-mongo:latest .
+docker push pranjaldeka/flask-mongo:latest
+
+
+5) README — step-by-step (Minikube)
+Prerequisites
+
+Minikube, kubectl, docker installed locally
+
+Start minikube (example):
+minikube start --driver=docker
+(Option A) Use Minikube Docker env to build locally:
+eval $(minikube -p minikube docker-env)
+docker build -t pranjaldeka/flask-mongo:latest .
+
+
+Apply Secrets and PV/PVC
+kubectl apply -f mongo-secret.yaml
+kubectl apply -f mongo-pv-pvc.yaml
+
+Deploy MongoDB
+kubectl apply -f mongo-service.yaml
+kubectl apply -f mongo-statefulset.yaml
+
+Wait for the pod and PVC to be ready:
+kubectl get pods -l app=mongo -w
+kubectl get pvc
+
+Deploy Flask
+
+kubectl apply -f flask-deployment.yaml
+kubectl apply -f flask-service.yaml
+
+Deploy HPA 
+kubectl apply -f flask-hpa.yaml
+
+
+Access Flask from host:
+
+If NodePort and nodePort is 30080:
+
+curl http://127.0.0.1:30080/
+
+
+
+
+Verify DB operations:
+curl -X POST -H "Content-Type: application/json" -d '{"sampleKey":"sampleValue"}' http://<minikube-ip>:30080/data
+curl http://<minikube-ip>:30080/data
